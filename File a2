@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Function declarations
+int** createMatrix(int rows, int cols);
+void fillMatrix(int** matrix, int rows, int cols);
+void printMatrix(int** matrix, int rows, int cols);
+int** addMatrices(int** mat1, int** mat2, int rows, int cols);
+void freeMatrix(int** matrix, int rows);
+
+int main() {
+    int rows = 3, cols = 3;
+
+    // Creating and filling matrices
+    int** matrix1 = createMatrix(rows, cols);
+    int** matrix2 = createMatrix(rows, cols);
+
+    printf("Enter elements for Matrix 1:\n");
+    fillMatrix(matrix1, rows, cols);
+
+    printf("Enter elements for Matrix 2:\n");
+    fillMatrix(matrix2, rows, cols);
+
+    // Printing matrices
+    printf("\nMatrix 1:\n");
+    printMatrix(matrix1, rows, cols);
+
+    printf("\nMatrix 2:\n");
+    printMatrix(matrix2, rows, cols);
+
+    // Adding matrices
+    printf("\nSum of Matrix 1 and Matrix 2:\n");
+    int** resultMatrix = addMatrices(matrix1, matrix2, rows, cols);
+    printMatrix(resultMatrix, rows, cols);
+
+    // Freeing allocated memory
+    freeMatrix(matrix1, rows);
+    freeMatrix(matrix2, rows);
+    freeMatrix(resultMatrix, rows);
+
+    return 0;
+}
+
+int** createMatrix(int rows, int cols) {
+    int** matrix = (int**)malloc(rows * sizeof(int*));
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = (int*)malloc(cols * sizeof(int));
+    }
+    return matrix;
+}
+
+void fillMatrix(int** matrix, int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("Element [%d][%d]: ", i + 1, j + 1);
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+}
+
+void printMatrix(int** matrix, int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int** addMatrices(int** mat1, int** mat2, int rows, int cols) {
+    int** result = createMatrix(rows, cols);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            result[i][j] = mat1[i][j] + mat2[i][j];
+        }
+    }
+    return result;
+}
+
+void freeMatrix(int** matrix, int rows) {
+    for (int i = 0; i < rows; i++) {
+        free(matrix[i]);
+    }
+    free(matrix);
+}
