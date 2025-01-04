@@ -1,0 +1,115 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+// Function declarations
+void printArray(int arr[], int size);
+int add(int a, int b);
+void swap(int *a, int *b);
+void generateRandomArray(int arr[], int size);
+int findMax(int arr[], int size);
+void bubbleSort(int arr[], int size);
+int isPrime(int n);
+void printFibonacci(int n);
+int factorial(int n);
+
+int main() {
+    int arr[10];
+    generateRandomArray(arr, 10);
+    
+    printf("Random Array:\n");
+    printArray(arr, 10);
+
+    printf("\nSorted Array:\n");
+    bubbleSort(arr, 10);
+    printArray(arr, 10);
+
+    int num = 5;
+    printf("\nFactorial of %d: %d\n", num, factorial(num));
+
+    printf("\nFirst 10 Fibonacci Numbers:\n");
+    printFibonacci(10);
+
+    int x = 7;
+    printf("\n%d is %s\n", x, isPrime(x) ? "Prime" : "Not Prime");
+
+    int a = 10, b = 20;
+    printf("\nBefore Swap: a = %d, b = %d\n", a, b);
+    swap(&a, &b);
+    printf("After Swap: a = %d, b = %d\n", a, b);
+
+    printf("\nMax in Array: %d\n", findMax(arr, 10));
+
+    return 0;
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+void generateRandomArray(int arr[], int size) {
+    srand(time(0));
+    for (int i = 0; i < size; i++) {
+        arr[i] = rand() % 100;
+    }
+}
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int findMax(int arr[], int size) {
+    int max = arr[0];
+    for (int i = 1; i < size; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+void bubbleSort(int arr[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(&arr[j], &arr[j + 1]);
+            }
+        }
+    }
+}
+
+int isPrime(int n) {
+    if (n <= 1) return 0;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void printFibonacci(int n) {
+    int a = 0, b = 1, c;
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a);
+        c = a + b;
+        a = b;
+        b = c;
+    }
+    printf("\n");
+}
+
+int factorial(int n) {
+    if (n == 0 || n == 1) return 1;
+    return n * factorial(n - 1);
+}
